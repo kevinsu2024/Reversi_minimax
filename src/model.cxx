@@ -10,8 +10,7 @@ Model::Model(int size)
 Model::Model(int width, int height)
         : board_({width, height}),
         table(),
-        hash_table(),
-          board_copy(board_)
+        board_copy(board_)
 {
     for(int i = 0; i < 8; i++){
         std::vector<std::vector<int>> table_row;
@@ -187,9 +186,8 @@ Model::find_hash(Board board)
 }
 int
 Model::minimax_(Move move, int depth, int alpha, int beta, bool
-maximizingPlayer, Player initialPlayer)
+maximizingPlayer, Player initialPlayer, std::unordered_map<int, int> hash_table)
 {
-
     if (depth == 0 || is_game_over() || next_moves_.size() == 0){
         if (winner_ == other_player(initialPlayer)){
             return -64;
@@ -198,19 +196,26 @@ maximizingPlayer, Player initialPlayer)
             return 64;
         }
         else{
-            return board_.count_player(initialPlayer) - board_.count_player
-            (other_player(initialPlayer));
+            return board_.count_player(initialPlayer) - board_.count_player(other_player(initialPlayer));
         }
-
     }
-
+    if (hash_table.find(find_hash(board_)) != hash_table.end()){
+        return hash_table[find_hash(board_)];
+    }
     ge211::Posn<int> best_val_pos = {100,100};
     if (maximizingPlayer){
         int maxEval = -100;
         for (Move val : next_moves_){
+            Model model_copy = Model(8,8);
+            model_copy.board_ = board_;
+            model_copy.next_moves_ = next_moves_;
+            model_copy.table = table;
+            model_copy.turn_ = other_player(initialPlayer);
             ge211::Posn<int> val_pos = val.first;
-            int eval = minimax_(val, depth - 1, alpha, beta, false,
-                                initialPlayer);
+            model_copy.play_move(val_pos);
+            int eval = model_copy.minimax_(val, depth - 1, alpha, beta, false,
+                                initialPlayer, hash_table);
+            hash_table[model_copy.find_hash(model_copy.board_)] = eval;
             if (eval > maxEval){
                 best_val_pos = val_pos;
             }
@@ -220,16 +225,25 @@ maximizingPlayer, Player initialPlayer)
             {
                 break;
             }
-
         }
         return maxEval;
     }
     else{
         int minEval = 100;
         for (Move val : next_moves_){
+            Model model_copy = Model(8,8);
+            model_copy.board_ = board_;
+            model_copy.next_moves_ = next_moves_;
+            model_copy.table = table;
+            model_copy.turn_ = initialPlayer;
+
             ge211::Posn<int> val_pos = val.first;
-            int eval = minimax_(val, depth - 1, alpha, beta, true,
-                                initialPlayer);
+
+            model_copy.play_move(val_pos);
+
+            int eval = model_copy.minimax_(val, depth - 1, alpha, beta, true,
+                                initialPlayer, hash_table);
+            hash_table[model_copy.find_hash(model_copy.board_)] = eval;
             if(eval < minEval){
                 best_val_pos = val_pos;
             }

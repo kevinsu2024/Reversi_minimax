@@ -54,5 +54,6 @@ private:
 
     ge211::Posn<int> hover_mouse_posn;
     int moves_count;
+    std::unordered_map<int, int> hash_table;
 
 };

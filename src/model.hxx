@@ -106,7 +106,7 @@ public:
     Move_map next_moves_;
 
     int minimax_(Move move, int depth, int alpha, int beta, bool
-    maximizingPlayer, Player initialPlayer);
+    maximizingPlayer, Player initialPlayer, std::unordered_map<int, int> hash_table);
 
 #ifdef CS211_TESTING
     // When this class is compiled for testing, members of a struct named
@@ -200,8 +200,6 @@ private:
     int find_hash(Board board);
 
     std::vector<std::vector<std::vector<int>>> table;
-
-    std::unordered_map<int, int> hash_table;
 
     Board board_copy;
 

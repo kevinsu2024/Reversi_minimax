@@ -8,7 +8,8 @@ Controller::Controller(int width, int height)
         : model_(width, height),
           view_(model_),
           hover_mouse_posn(ge211::Posn<int>{0,0}),
-          moves_count(0)
+          moves_count(0),
+          hash_table()
 { }
 
 void
@@ -32,10 +33,9 @@ Controller::on_mouse_down(ge211::Mouse_button button, ge211::Posn<int> position)
         }
         for (Move move: model_.next_moves_){
             ge211::Posn<int> move_pos = move.first;
-            int eval_score = model_.minimax_(move, 10, -1000, 1000,
+            int eval_score = model_.minimax_(move, 5, -1000, 1000,
                                              true,
-                                             Player::dark);
-            std::cout << "move score: " + std::to_string(eval_score) + "|\n";
+                                             Player::dark, hash_table);
             if (eval_score > best_move_score){
             best_move = move_pos;
             best_move_score = eval_score;

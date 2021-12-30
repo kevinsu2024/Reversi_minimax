@@ -282,15 +282,9 @@ unordered_set
 vector
 -
 
-/Users/kevinsu/Desktop/Northwestern/Second year resources/CS 211/hw06/src/controller.cxx
-controller.hxx
-/Users/kevinsu/Desktop/Northwestern/Second year resources/CS 211/hw06/src/controller.hxx
-
-/Users/kevinsu/Desktop/Northwestern/Second year resources/CS 211/hw06/src/controller.hxx
+/Users/kevinsu/Desktop/Northwestern/Second year resources/CS 211/hw06/src/model.cxx
 model.hxx
 /Users/kevinsu/Desktop/Northwestern/Second year resources/CS 211/hw06/src/model.hxx
-view.hxx
-/Users/kevinsu/Desktop/Northwestern/Second year resources/CS 211/hw06/src/view.hxx
 
 /Users/kevinsu/Desktop/Northwestern/Second year resources/CS 211/hw06/src/model.hxx
 player.hxx
@@ -326,12 +320,6 @@ bitset
 cstddef
 -
 initializer_list
--
-
-/Users/kevinsu/Desktop/Northwestern/Second year resources/CS 211/hw06/src/view.hxx
-model.hxx
-/Users/kevinsu/Desktop/Northwestern/Second year resources/CS 211/hw06/src/model.hxx
-string
 -
 
 /usr/local/include/SDL2/SDL_blendmode.h
